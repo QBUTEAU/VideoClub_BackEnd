@@ -1,2 +1,0 @@
-# WR506D
-Module WR506D du BUT MMI.
