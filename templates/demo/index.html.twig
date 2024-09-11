@@ -1,0 +1,8 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello DemoController!{% endblock %}
+
+{% block body %}
+
+<h1>{{ datetime|format_datetime(locale: 'fr', timezone: 'Europe/Paris')}}</h1>
+{% endblock %}
