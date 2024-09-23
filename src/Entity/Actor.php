@@ -42,9 +42,6 @@ class Actor
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $bio = null;
 
-    #[ORM\Column(type: Types::DATE_MUTABLE, nullable: true)]
-    private ?\DateTimeInterface $deathDate = null;
-
     #[ORM\Column]
     private ?\DateTimeImmutable $created_at = null;
 
@@ -159,18 +156,6 @@ class Actor
     public function setBio(?string $bio): static
     {
         $this->bio = $bio;
-
-        return $this;
-    }
-
-    public function getDeathDate(): ?\DateTimeInterface
-    {
-        return $this->deathDate;
-    }
-
-    public function setDeathDate(?\DateTimeInterface $deathDate): static
-    {
-        $this->deathDate = $deathDate;
 
         return $this;
     }

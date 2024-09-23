@@ -80,33 +80,6 @@ class Category
     }
 
     /**
-     * @return Collection<int, Actor>
-     */
-    public function getActors(): Collection
-    {
-        return $this->actors;
-    }
-
-    public function addActor(Actor $actor): static
-    {
-        if (!$this->actors->contains($actor)) {
-            $this->actors->add($actor);
-            $actor->addCategory($this);
-        }
-
-        return $this;
-    }
-
-    public function removeActor(Actor $actor): static
-    {
-        if ($this->actors->removeElement($actor)) {
-            $actor->removeCategory($this);
-        }
-
-        return $this;
-    }
-
-    /**
      * @return Collection<int, Movie>
      */
     public function getMovies(): Collection
