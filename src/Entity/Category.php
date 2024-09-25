@@ -10,6 +10,7 @@ use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: CategoryRepository::class)]
+#[ORM\HasLifecycleCallbacks]
 #[ApiResource]
 class Category
 {
@@ -66,6 +67,12 @@ class Category
 
         return $this;
     }
+    
+    #[ORM\PrePersist]
+    public function setCreatedAtValue(): void
+    {
+        $this->created_at = new \DateTimeImmutable();
+    }
 
     public function getUpdatedAt(): ?\DateTimeInterface
     {
@@ -75,33 +82,6 @@ class Category
     public function setUpdatedAt(?\DateTimeInterface $updated_at): static
     {
         $this->updated_at = $updated_at;
-
-        return $this;
-    }
-
-    /**
-     * @return Collection<int, Actor>
-     */
-    public function getActors(): Collection
-    {
-        return $this->actors;
-    }
-
-    public function addActor(Actor $actor): static
-    {
-        if (!$this->actors->contains($actor)) {
-            $this->actors->add($actor);
-            $actor->addCategory($this);
-        }
-
-        return $this;
-    }
-
-    public function removeActor(Actor $actor): static
-    {
-        if ($this->actors->removeElement($actor)) {
-            $actor->removeCategory($this);
-        }
 
         return $this;
     }

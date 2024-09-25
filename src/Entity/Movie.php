@@ -10,6 +10,7 @@ use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: MovieRepository::class)]
+#[ORM\HasLifecycleCallbacks]
 #[ApiResource]
 class Movie
 {
@@ -177,6 +178,12 @@ class Movie
         $this->created_at = $created_at;
 
         return $this;
+    }
+    
+    #[ORM\PrePersist]
+    public function setCreatedAtValue(): void
+    {
+        $this->created_at = new \DateTimeImmutable();
     }
 
     public function getUpdatedAt(): ?\DateTimeInterface
