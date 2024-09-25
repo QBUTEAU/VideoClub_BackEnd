@@ -49,7 +49,7 @@ class AppFixtures extends Fixture
             $movie->setDirector($faker->name);
             $movie->setDescription($faker->paragraph);
             $movie->setMedia($faker->imageUrl(400, 600, 'movies'));
-            ->setEntries($faker->numberBetween(100000, 1000000));
+            $movie->setEntries($faker->numberBetween(100000, 1000000));
             $movie->setCreatedAt($faker->dateTimeBetween('-2 years', 'now'));
 
             // Associate random actors
