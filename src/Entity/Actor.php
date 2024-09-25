@@ -10,6 +10,7 @@ use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: ActorRepository::class)]
+#[ORM\HasLifecycleCallbacks]
 #[ApiResource]
 class Actor
 {
@@ -41,9 +42,6 @@ class Actor
 
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $bio = null;
-
-    #[ORM\Column(type: Types::DATE_MUTABLE, nullable: true)]
-    private ?\DateTimeInterface $deathDate = null;
 
     #[ORM\Column]
     private ?\DateTimeImmutable $created_at = null;
@@ -163,18 +161,6 @@ class Actor
         return $this;
     }
 
-    public function getDeathDate(): ?\DateTimeInterface
-    {
-        return $this->deathDate;
-    }
-
-    public function setDeathDate(?\DateTimeInterface $deathDate): static
-    {
-        $this->deathDate = $deathDate;
-
-        return $this;
-    }
-
     public function getCreatedAt(): ?\DateTimeImmutable
     {
         return $this->created_at;
@@ -187,6 +173,12 @@ class Actor
         return $this;
     }
 
+    #[ORM\PrePersist]
+    public function setCreatedAtValue(): void
+    {
+        $this->created_at = new \DateTimeImmutable();
+    }
+
     public function getUpdatedAt(): ?\DateTimeInterface
     {
         return $this->updated_at;
@@ -195,30 +187,6 @@ class Actor
     public function setUpdatedAt(?\DateTimeInterface $updated_at): static
     {
         $this->updated_at = $updated_at;
-
-        return $this;
-    }
-
-    /**
-     * @return Collection<int, Category>
-     */
-    public function getCategories(): Collection
-    {
-        return $this->categories;
-    }
-
-    public function addCategory(Category $category): static
-    {
-        if (!$this->categories->contains($category)) {
-            $this->categories->add($category);
-        }
-
-        return $this;
-    }
-
-    public function removeCategory(Category $category): static
-    {
-        $this->categories->removeElement($category);
 
         return $this;
     }
