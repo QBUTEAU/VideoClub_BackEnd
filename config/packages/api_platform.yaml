@@ -11,6 +11,7 @@ api_platform:
     graphql:
         enabled: true
     defaults:
+        pagination_items_per_page: 100
         stateless: true
         cache_headers:
             vary: ['Content-Type', 'Authorization', 'Origin']

@@ -3,6 +3,9 @@
 namespace App\Entity;
 
 use ApiPlatform\Metadata\ApiResource;
+use ApiPlatform\Metadata\ApiFilter;
+use ApiPlatform\Doctrine\Orm\Filter\SearchFilter;
+
 use App\Repository\ActorRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -12,6 +15,7 @@ use Doctrine\ORM\Mapping as ORM;
 #[ORM\Entity(repositoryClass: ActorRepository::class)]
 #[ORM\HasLifecycleCallbacks]
 #[ApiResource]
+#[ApiFilter(SearchFilter::class, properties: ['firstname' => 'partial', 'lastname' => 'partial', 'movies.title' => 'partial'])]
 class Actor
 {
     #[ORM\Id]
@@ -44,16 +48,19 @@ class Actor
     private ?string $bio = null;
 
     #[ORM\Column]
-    private ?\DateTimeImmutable $created_at = null;
+    private ?\DateTimeImmutable $createdAt = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
-    private ?\DateTimeInterface $updated_at = null;
+    private ?\DateTimeInterface $updatedAt = null;
 
     /**
      * @var Collection<int, Movie>
      */
     #[ORM\ManyToMany(targetEntity: Movie::class, inversedBy: 'actors')]
     private Collection $movies;
+
+    #[ORM\Column(type: Types::DATE_MUTABLE, nullable: true)]
+    private ?\DateTimeInterface $deathDate = null;
 
     public function __construct()
     {
@@ -163,12 +170,12 @@ class Actor
 
     public function getCreatedAt(): ?\DateTimeImmutable
     {
-        return $this->created_at;
+        return $this->createdAt;
     }
 
-    public function setCreatedAt(\DateTimeImmutable $created_at): static
+    public function setCreatedAt(\DateTimeImmutable $createdAt): static
     {
-        $this->created_at = $created_at;
+        $this->createdAt = $createdAt;
 
         return $this;
     }
@@ -176,17 +183,17 @@ class Actor
     #[ORM\PrePersist]
     public function setCreatedAtValue(): void
     {
-        $this->created_at = new \DateTimeImmutable();
+        $this->createdAt = new \DateTimeImmutable();
     }
 
     public function getUpdatedAt(): ?\DateTimeInterface
     {
-        return $this->updated_at;
+        return $this->updatedAt;
     }
 
-    public function setUpdatedAt(?\DateTimeInterface $updated_at): static
+    public function setUpdatedAt(?\DateTimeInterface $updatedAt): static
     {
-        $this->updated_at = $updated_at;
+        $this->updatedAt = $updatedAt;
 
         return $this;
     }
@@ -211,6 +218,18 @@ class Actor
     public function removeMovie(Movie $movie): static
     {
         $this->movies->removeElement($movie);
+
+        return $this;
+    }
+
+    public function getDeathDate(): ?\DateTimeInterface
+    {
+        return $this->deathDate;
+    }
+
+    public function setDeathDate(?\DateTimeInterface $deathDate): static
+    {
+        $this->deathDate = $deathDate;
 
         return $this;
     }
