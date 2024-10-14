@@ -12,36 +12,67 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
+use Symfony\Component\Validator\Constraints as Assert;
+
 #[ORM\Entity(repositoryClass: ActorRepository::class)]
 #[ORM\HasLifecycleCallbacks]
 #[ApiResource]
 #[ApiFilter(SearchFilter::class, properties: ['firstname' => 'partial', 'lastname' => 'partial', 'movies.title' => 'partial'])]
 class Actor
 {
+
+    public const GENRES = ["M", "F"];
+
+
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotNull]
+    #[Assert\Length(
+        min: 2,
+        max: 50,
+        minMessage: 'Le nom doit contenir un minimum de {{ limit }} caractères. ',
+        maxMessage: 'Le nom ne doit pas contenir plus de {{ limit }} caractères',
+    )]
     private ?string $lastname = null;
 
     #[ORM\Column(length: 255, nullable: true)]
+    #[Assert\Length(
+        min: 2,
+        max: 50,
+        minMessage: 'Le prénom doit contenir un minimum de {{ limit }} caractères.',
+        maxMessage: 'Le prénom ne doit pas contenir plus de {{ limit }} caractères',
+    )]
     private ?string $firstname = null;
 
     #[ORM\Column(type: Types::DATE_MUTABLE)]
+    #[Assert\NotNull]
     private ?\DateTimeInterface $dob = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotNull]
+    #[Assert\Country(
+        message: 'La nationalité doit être un code ISO 3166-1 alpha-2 valide (France = FR).',
+    )]
     private ?string $nationality = null;
 
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $media = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotNull]
+    #[Assert\Choice(choices: Actor::GENRES, message: 'Le genre doit être M ou F.')]
     private ?string $gender = null;
 
     #[ORM\Column(nullable: true)]
+    #[Assert\Range(
+        min: 0,
+        max: 10,
+        notInRangeMessage: 'L\'acteur ne peut pas avoir plus de {{ max }} récompenses.',
+    )]
     private ?int $awards = null;
 
     #[ORM\Column(type: Types::TEXT, nullable: true)]
