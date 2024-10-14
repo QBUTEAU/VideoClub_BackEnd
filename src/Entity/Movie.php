@@ -9,9 +9,17 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
+use ApiPlatform\Metadata\ApiFilter;
+use ApiPlatform\Doctrine\Orm\Filter\DateFilter;
+use ApiPlatform\Doctrine\Orm\Filter\OrderFilter;
+
+use Symfony\Component\Validator\Constraints as Assert;
+
 #[ORM\Entity(repositoryClass: MovieRepository::class)]
 #[ORM\HasLifecycleCallbacks]
 #[ApiResource]
+#[ApiFilter(DateFilter::class, properties: ['releaseDate'])]
+#[ApiFilter(OrderFilter::class, properties: ['title'])]
 class Movie
 {
     #[ORM\Id]
@@ -20,12 +28,25 @@ class Movie
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotNull]
+    #[Assert\Length(
+        min: 2,
+        max: 40,
+        minMessage: 'Le titre doit contenir au moins {{ limit }} caractères. ',
+        maxMessage: 'Le titre ne doit pas contenir plus de {{ limit }} caractères',
+    )]
     private ?string $title = null;
 
     #[ORM\Column(type: Types::DATE_MUTABLE, nullable: true)]
     private ?\DateTimeInterface $releaseDate = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\Length(
+        min: 2,
+        max: 25,
+        minMessage: 'Le réalisateur doit contenir au moins {{ limit }} caractères. ',
+        maxMessage: 'Le réalisateur ne doit pas contenir plus de {{ limit }} caractères',
+    )]
     private ?string $director = null;
 
     #[ORM\Column(type: Types::TEXT, nullable: true)]
@@ -38,9 +59,19 @@ class Movie
     private ?int $entries = null;
 
     #[ORM\Column(nullable: true)]
+    #[Assert\Range(
+        min: 0,
+        max: 5,
+        notInRangeMessage: 'Le film ne peut pas avoir une note supérieure à {{ max }}.',
+    )]
     private ?float $rating = null;
 
     #[ORM\Column(nullable: true)]
+    #[Assert\Range(
+        min: 90,
+        max: 195,
+        notInRangeMessage: 'Le film doit durer entre {{ min }} min (1h30) et {{ max }} min (3h15).',
+    )]
     private ?int $duration = null;
 
     #[ORM\Column]
@@ -59,6 +90,7 @@ class Movie
      * @var Collection<int, Category>
      */
     #[ORM\ManyToMany(targetEntity: Category::class, inversedBy: 'movies')]
+    #[Assert\NotNull]
     private Collection $categories;
 
     public function __construct()

@@ -20,6 +20,13 @@ class Category
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotNull]
+    #[Assert\Length(
+        min: 2,
+        max: 15,
+        minMessage: 'Le genre doit contenir un minimum de {{ limit }} caractères.',
+        maxMessage: 'Le genre ne doit pas contenir plus de {{ limit }} caractères',
+    )]
     private ?string $title = null;
 
     #[ORM\Column]
