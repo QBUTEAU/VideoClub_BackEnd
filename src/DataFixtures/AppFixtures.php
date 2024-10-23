@@ -49,7 +49,7 @@ class AppFixtures extends Fixture
                   ->setNationality($faker->country())
                   ->setBio($faker->text(200))
                   ->setGender($faker->randomElement(['M', 'F']))
-                  ->setAwards($faker->numberBetween(0, 100));
+                  ->setAwards($faker->numberBetween(0, 10));
 
             // Ajouter deathDate de manière aléatoire
             if (mt_rand(0, 1) === 1) {

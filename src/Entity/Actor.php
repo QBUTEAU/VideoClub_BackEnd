@@ -5,6 +5,7 @@ namespace App\Entity;
 use ApiPlatform\Metadata\ApiResource;
 use ApiPlatform\Metadata\ApiFilter;
 use ApiPlatform\Doctrine\Orm\Filter\SearchFilter;
+use ApiPlatform\Doctrine\Orm\Filter\OrderFilter;
 
 use App\Repository\ActorRepository;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -18,11 +19,11 @@ use Symfony\Component\Validator\Constraints as Assert;
 #[ORM\HasLifecycleCallbacks]
 #[ApiResource]
 #[ApiFilter(SearchFilter::class, properties: ['firstname' => 'partial', 'lastname' => 'partial', 'movies.title' => 'partial'])]
+#[ApiFilter(OrderFilter::class, properties: ['lastname', "firstname"])]
 class Actor
 {
 
     public const GENRES = ["M", "F"];
-
 
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -35,7 +36,7 @@ class Actor
         min: 2,
         max: 50,
         minMessage: 'Le nom doit contenir un minimum de {{ limit }} caractères. ',
-        maxMessage: 'Le nom ne doit pas contenir plus de {{ limit }} caractères',
+        maxMessage: 'Le nom ne doit pas contenir plus de {{ limit }} caractères.',
     )]
     private ?string $lastname = null;
 
@@ -44,7 +45,7 @@ class Actor
         min: 2,
         max: 50,
         minMessage: 'Le prénom doit contenir un minimum de {{ limit }} caractères.',
-        maxMessage: 'Le prénom ne doit pas contenir plus de {{ limit }} caractères',
+        maxMessage: 'Le prénom ne doit pas contenir plus de {{ limit }} caractères.',
     )]
     private ?string $firstname = null;
 
