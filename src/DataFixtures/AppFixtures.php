@@ -5,6 +5,7 @@ namespace App\DataFixtures;
 use App\Entity\Actor;
 use App\Entity\Category;
 use App\Entity\Movie;
+use App\Entity\User;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
 use Faker\Factory;
@@ -49,7 +50,7 @@ class AppFixtures extends Fixture
                   ->setNationality($faker->country())
                   ->setBio($faker->text(200))
                   ->setGender($faker->randomElement(['M', 'F']))
-                  ->setAwards($faker->numberBetween(0, 100));
+                  ->setAwards($faker->numberBetween(0, 10));
 
             // Ajouter deathDate de manière aléatoire
             if (mt_rand(0, 1) === 1) {
@@ -94,6 +95,14 @@ class AppFixtures extends Fixture
 
             $manager->persist($movie);
         }
+
+        $user = new User();
+        $user->setEmail('qbuteau@mmi.fr')
+             ->setPassword(password_hash('WR505D', PASSWORD_BCRYPT));
+
+        $user->setRoles(['ROLE_ADMIN']);
+
+        $manager->persist($user);
 
         $manager->flush();
     }
