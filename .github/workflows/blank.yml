@@ -49,6 +49,9 @@ jobs:
     - name: Run PHPUnit
       run: vendor/bin/phpunit tests/
 
+    - name: Run DocumentationTest
+      run: php bin/phpunit tests/DocumentationTest.php
+
     - name: Run PHP_CodeSniffer
       run: vendor/bin/phpcs --standard=PSR2 src/
 
