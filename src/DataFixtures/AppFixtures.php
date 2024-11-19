@@ -45,12 +45,12 @@ class AppFixtures extends Fixture
         for ($i = 0; $i < 75; $i++) {
             $actor = new Actor();
             $actor->setLastname($faker->lastName())
-                  ->setFirstname($faker->firstName())
-                  ->setDob($faker->dateTimeBetween('-70 years', '-25 years'))
-                  ->setNationality($faker->country())
-                  ->setBio($faker->text(200))
-                  ->setGender($faker->randomElement(['M', 'F']))
-                  ->setAwards($faker->numberBetween(0, 10));
+                ->setFirstname($faker->firstName())
+                ->setDob($faker->dateTimeBetween('-70 years', '-25 years'))
+                ->setNationality($faker->country())
+                ->setBio($faker->text(200))
+                ->setGender($faker->randomElement(['M', 'F']))
+                ->setAwards($faker->numberBetween(0, 10));
 
             // Ajouter deathDate de manière aléatoire
             if (mt_rand(0, 1) === 1) {
@@ -71,12 +71,12 @@ class AppFixtures extends Fixture
         for ($i = 0; $i < 50; $i++) {
             $movie = new Movie();
             $movie->setTitle($faker->movie())
-                  ->setReleaseDate($faker->dateTimeBetween('-30 years', 'now'))
-                  ->setDirector($faker->director())
-                  ->setDescription($faker->overview())
-                  ->setDuration($faker->numberBetween(90, 195))
-                  ->setEntries($faker->numberBetween(100000, 1000000))
-                  ->setRating($this->generateRandomRating());
+                ->setReleaseDate($faker->dateTimeBetween('-30 years', 'now'))
+                ->setDirector($faker->director())
+                ->setDescription($faker->overview())
+                ->setDuration($faker->numberBetween(90, 195))
+                ->setEntries($faker->numberBetween(100000, 1000000))
+                ->setRating($this->generateRandomRating());
 
             if (!empty($imageLinks)) {
                 $randomImageLink = array_shift($imageLinks);
@@ -98,7 +98,7 @@ class AppFixtures extends Fixture
 
         $user = new User();
         $user->setEmail('qbuteau@mmi.fr')
-             ->setPassword(password_hash('WR505D', PASSWORD_BCRYPT));
+            ->setPassword(password_hash('WR505D', PASSWORD_BCRYPT));
 
         $user->setRoles(['ROLE_ADMIN']);
 

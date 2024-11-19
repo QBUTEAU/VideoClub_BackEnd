@@ -6,10 +6,9 @@ use Cocur\Slugify\Slugify as CocurSlugify;
 
 class Slugify
 {
-    public function slugify($stringToSlugify){
+    public function slugify($stringToSlugify)
+    {
         $slugify = new CocurSlugify();
         return $slugify->slugify($stringToSlugify);
     }
 }
-
-?>

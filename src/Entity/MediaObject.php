@@ -28,7 +28,8 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
             controller: CreateMediaObjectAction::class,
             openapi: new Model\Operation(
                 requestBody: new Model\RequestBody(
-                    content: new \ArrayObject([
+                    content: new \ArrayObject(
+                        [
                         'multipart/form-data' => [
                             'schema' => [
                                 'type' => 'object',
@@ -40,7 +41,8 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
                                 ]
                             ]
                         ]
-                    ])
+                        ]
+                    )
                 )
             ),
             validationContext: ['groups' => ['Default', 'media_object_create']],

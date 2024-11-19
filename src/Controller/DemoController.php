@@ -17,10 +17,13 @@ class DemoController extends AbstractController
         $slug = new Slugify();
         $demo = $slug->slugify('Test du Slugify !');
 
-        return $this->render('demo/index.html.twig', [
+        return $this->render(
+            'demo/index.html.twig',
+            [
             'controller_name' => 'DemoController',
             'datetime' => new \DateTime(),
             'slug' => $demo
-        ]);
+            ]
+        );
     }
 }

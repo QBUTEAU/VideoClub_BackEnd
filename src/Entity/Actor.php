@@ -18,7 +18,11 @@ use Symfony\Component\Validator\Constraints as Assert;
 #[ORM\Entity(repositoryClass: ActorRepository::class)]
 #[ORM\HasLifecycleCallbacks]
 #[ApiResource]
-#[ApiFilter(SearchFilter::class, properties: ['firstname' => 'partial', 'lastname' => 'partial', 'movies.title' => 'partial'])]
+#[ApiFilter(SearchFilter::class, properties:[
+    'firstname' => 'partial',
+    'lastname' => 'partial',
+    'movies.title' => 'partial'
+    ])]
 #[ApiFilter(OrderFilter::class, properties: ['lastname', "firstname"])]
 class Actor
 {
