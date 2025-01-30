@@ -30,8 +30,10 @@ class CountEntitiesCommand extends Command
         $this
             ->addArgument('type', InputArgument::REQUIRED, 'The type of data to display (movies, actors, categories)')
             ->addOption('details', null, InputOption::VALUE_NONE, 'Show detailed information')
-            ->addOption('log-file', null, InputOption::VALUE_OPTIONAL, 'Specify a custom log file', '/var/log/command.log')
-            ->addArgument('category', InputArgument::OPTIONAL | InputArgument::IS_ARRAY, 'Specify the category or categories to get related movies');
+            ->addOption('log-file', null, InputOption::VALUE_OPTIONAL, 'Specify a custom log file', 
+                '/var/log/command.log')
+            ->addArgument('category', InputArgument::OPTIONAL | InputArgument::IS_ARRAY,
+                'Specify the category or categories to get related movies');
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): int
