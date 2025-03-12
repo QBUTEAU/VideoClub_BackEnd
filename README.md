@@ -15,8 +15,8 @@ This repository corresponds to a project closely related to resource R5.DWeb-DI.
 ## Installation
 ### 1. Clone the repository
 ```
-git clone https://github.com/QBUTEAU/VideoClub_BackEnd.git
-cd VideoClub_BackEnd
+git clone https://github.com/QBUTEAU/VideoClub_WR506D.git
+cd VideoClub_WR506D
 ```
 
 ### 2. Install dependencies
